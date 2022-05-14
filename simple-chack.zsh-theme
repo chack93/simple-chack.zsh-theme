@@ -41,17 +41,6 @@ function _git_info {
     done < <(git status --porcelain --branch 2>/dev/null)  # note the space between the two <
 
     # print without a trailing newline
-    printf " $ref$marks"
+    printf " [$ref$marks]"
 }
 
-function mnml_git {
-    local statc="%{\e[0;3${MNML_OK_COLOR}m%}" # assume clean
-    local bname="$(git rev-parse --abbrev-ref HEAD 2> /dev/null)"
-
-    if [ -n "$bname" ]; then
-        if [ -n "$(git status --porcelain 2> /dev/null)" ]; then
-            statc="%{\e[0;3${MNML_ERR_COLOR}m%}"
-        fi
-        printf '%b' "$statc$bname%{\e[0m%}"
-    fi
-}
